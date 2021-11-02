@@ -1,5 +1,5 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
   def index
     @prototypes = Prototype.includes(:user).order("created_at DESC")
   end
@@ -42,6 +42,6 @@ class PrototypesController < ApplicationController
 
   private
   def prototype_params
-    params.permit(:title, :catch_copy, :concept,:image).merge(user_id: current_user.id)
+    params.require(:prototype).permit(:title, :catch_copy, :concept,:image).merge(user_id: current_user.id)
   end
 end
