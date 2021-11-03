@@ -1,10 +1,12 @@
 class CommentsController < ApplicationController
   def create
-    comment = Comment.new(comment_params)
-    if comment.save
+    @comment = Comment.new(comment_params)
+    if @comment.save
       redirect_to "/prototypes/#{comment.prototype.id}"
     else
-      render "/prototypes/#{comment.prototype.id}"
+      @prototype = @comment.prototype
+      @comments = @prototype.comments
+      render "/prototypes/show"
     end
   end
 
